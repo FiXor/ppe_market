@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/page_produit.css') }}"/>{% endblock %}
+{% block body %}
+<h1>Produit</h1>
+
+<table class="table">
+    <tbody>
+    <tr>
+        <th>Id</th>
+        <td>{{ produit.id }}</td>
+    </tr>
+    <tr>
+        <th>Libelle</th>
+        <td>{{ produit.libelle }}</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td>{{ produit.description }}</td>
+    </tr>
+    <tr>
+        <th>Prixht</th>
+        <td>{{ produit.prixht }}</td>
+    </tr>
+    <tr>
+        <th>Stock</th>
+        <td>{{ produit.stock }}</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div class="grid product">
+    <div class="column-xs-12 column-md-7">
+        <div class="product-gallery">
+            <div class="product-image">
+                <img class="active" src="">
+            </div>
+            <ul class="image-list">
+                <li class="image-item"><img src="https://source.unsplash.com/W1yjvf5idqA"></li>
+                <li class="image-item"><img src="https://source.unsplash.com/VgbUxvW3gS4"></li>
+                <li class="image-item"><img src="https://source.unsplash.com/5WbYFH0kf_8"></li>
+            </ul>
+        </div>
+    </div>
+    <div class="column-xs-12 column-md-5">
+        <h1>{{ produit.libelle }}</h1>
+        <div class="text-success"
+             style="font-weight: bold; font-size: 2rem;">{{ produit.prixht }} €
+        </div>
+        <div class="text-secondary"
+             style="font-size: 1rem;">{{ produit.stock }} exemplaires
+        </div>
+        <div class="description">
+            <p>{{ produit.description }}</p>
+        </div>
+
+
+        {% if not app.user %}
+
+        <p style="color: #007bff">Merci de vous connecter ou de créer un compte pour pouvoir passer une commande</p>
+        <center>
+            <a href="{{ path('security_login') }}">
+                <button class="add-to-cart">Se connecter</button>
+            </a>
+            <a href="{{ path('security_inscription') }}">
+                <button class="add-to-cart">&nbsp;&nbsp;&nbsp;S'inscrire&nbsp;&nbsp;&nbsp;</button>
+            </a>
+
+            {% else %}
+
+                <a href="{{ path('panier_add', {'id': produit.id}) }}">
+                    <button class="add-to-cart">Acheter</button>
+                </a>
+
+            {% endif %}
+        </center>
+
+
+    </div>
+</div>
+
+
+<a href="{{ path('produit.index') }}">back to list</a>
+
+<a href="{{ path('produit.edit', {'id': produit.id}) }}">edit</a>
+
+{{ include('produit/_delete_form.html.twig') }}
+    {% block javascripts %}
+<script src="{{ asset('js/page_produit.js') }}"></script>
+</script>
+{% endblock %}
+{% endblock %}
